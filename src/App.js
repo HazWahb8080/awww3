@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import Hero from './components/index';
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useEffect } from 'react';
+import Slide from './components/slide/index';
+import Loadable from "react-loadable";
+import "./index.scss";
+
+const loader = () => <div></div>;
+//
+const HomeLazy = Loadable({
+  loader: () => import("./containers/Main"),
+  loading: loader,
+});
 
 function App() {
+  useEffect(()=>{
+    gsap.registerPlugin(ScrollTrigger);
+  },[])
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <HomeLazy/>
     </div>
   );
 }
